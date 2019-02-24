@@ -1,0 +1,241 @@
+package MomentoDeInercia;
+import java.util.Scanner;
+public class MomentoDeInercia_Classe{ // Chave que abre classe   
+    public static void main(String[] args){
+        Scanner input = new Scanner(System.in); 
+        System.out.format(" > > > PROGRAMA PARA CALCULAR MOMENTO DE INERCIA EM VIGAS PERFEITAMENTE SIMETRICAS < < < \n");
+        int perfilMetalico;
+        do { // chave abertura do
+        // fazer um while
+            
+        System.out.format("Digite o tipo de perfil da viga metalica\n");
+        System.out.format("1 -> Para perfil H\n");
+        System.out.format("2 -> Para perfil T\n");
+        System.out.format("3 -> Para perfil Cantoneira\n");
+        System.out.format("4 -> Para perfil Cantoneira dupla\n");
+            
+         perfilMetalico = input.nextInt();
+            
+         if (perfilMetalico!= 1 && perfilMetalico!= 2 && perfilMetalico!= 3 && perfilMetalico!= 4 ){// chave que abre o IF
+             System.out.format("Digite novamente\n");
+        }// chave que fecha o primeiro IF de escolha de perfil metalico
+        }// chave fecha do
+        
+        while (perfilMetalico!= 1 && perfilMetalico!= 2 && perfilMetalico!= 3 && perfilMetalico!= 4 );
+                
+        switch(perfilMetalico){ // chave que abre switch
+            case 1:
+                perfilH();
+                break;
+            case 2:
+                perfilT();
+                break;
+            case 3:
+                perfilCantoneira();
+                break;
+            case 4:
+                perfilCantoneiraDupla();
+                break;
+        } // chave que fecha o Switch
+        
+    }// chave da função Main
+    public static void perfilH(){ // chave do metodo perfilH
+        Scanner input = new Scanner(System.in);
+
+     System.out.format("Digite a largura da mesa inferior(CM)\n");
+     double larguradamesa1 = input.nextDouble();
+        
+     System.out.format("Digite a espessura da mesa inferior (CM)\n");
+     double espessuramesa1 = input.nextDouble();
+         
+     System.out.format("Digite o tamanho da alma(CM)\n");
+     double tamanhodaalma = input.nextDouble();
+        
+     System.out.format("Digite a espessura da alma\n");
+     double espessuradaalma = input.nextDouble();
+         
+     double centroidex = larguradamesa1/2;
+     double centroidey = (tamanhodaalma/2)+espessuramesa1;
+     
+     System.out.format("Eixo X = %.2f Eixo Y = %.2f\n", centroidex, centroidey);
+     double dy = (tamanhodaalma/2)+(espessuramesa1/2);
+     //System.out.format("dy = %.2f\n",dy);
+     
+     double ix0 = espessuramesa1*espessuramesa1*espessuramesa1*larguradamesa1/12;
+     //System.out.format("ix0 = %.2f\n", ix0);
+       
+     double areafig1 = espessuramesa1*larguradamesa1;
+     // System.out.format("area da figura = %.2f\n", areafig1);
+     
+     double dya = dy*dy*areafig1;
+     //System.out.format("dya = %.2f\n", dya);    
+     
+     double ixfig1 = ix0 + dya;
+     
+     System.out.format("Ix total = %.2f\n", ixfig1);      
+    } // chave que fecha o metodo perfilH;
+    public static void perfilT(){ // chave que abre metodo perfil T
+         Scanner input = new Scanner(System.in);
+
+     double larguradamesa1;
+     System.out.format("Digite a largura da mesa inferior ou superior (CM)\n");
+     larguradamesa1 = input.nextDouble();
+     
+     System.out.format("Digite a espessura da mesa inferior ou superior (CM)\n");
+     double espessuramesa1 = input.nextDouble();
+     
+     System.out.format("Digite o tamanho da alma(CM)\n");
+     double tamanhodaalma = input.nextDouble();
+     
+     System.out.format("Digite a espessura da alma\n");
+     double espessuradaalma = input.nextDouble();
+        
+     double centroidex = larguradamesa1/2;
+      
+     double y1 = tamanhodaalma/2;
+     //System.out.format("y1 = %.2f\n",y1);
+      
+     double y2 = (espessuramesa1/2) + tamanhodaalma;
+     //System.out.format("y2 = %.2f\n",y2);
+     
+     double areadamesa1 = espessuramesa1*larguradamesa1;
+      
+     double areadaalma = tamanhodaalma*espessuradaalma;
+      
+     double areatotaldafigura = areadamesa1 + areadaalma;
+      
+     double aiy1 = y1*areadamesa1;
+     //System.out.format("aiy1 = %.2f\n",aiy1);
+      
+     double aiy2 = y2*areadaalma;
+     //System.out.format("aiy2 = %.2f\n",aiy2);
+      
+     double y1a1Total = aiy1+aiy2;
+     //System.out.format("YiaiTotal = %.2f\n",y1a1Total);
+      
+     double centroidey = y1a1Total/areatotaldafigura;
+     System.out.format("centroide Y = %.2f\n",centroidey);
+      
+     System.out.format("Eixo X = %.2f Eixo Y = %.2f\n", centroidex, centroidey);
+     double dy = tamanhodaalma - centroidey;
+     //System.out.format("dy = %.2f\n",dy);
+        
+     double ix1 = (espessuradaalma*tamanhodaalma*tamanhodaalma*tamanhodaalma/12)+ (areadaalma*((centroidey - y1)*(centroidey - y1)));
+      
+     double ixi2 = (larguradamesa1*espessuramesa1*espessuramesa1*espessuramesa1/12) + (areadamesa1*((y2-centroidey)*(y2-centroidey)));
+      
+     double IxTotal = ix1 + ixi2;
+     //System.out.format("Ix1 = %.2f\n",ix1);
+     //System.out.format("Ix2 = %.2f\n",ixi2);
+      
+     System.out.format("Ix = %.2f\n",IxTotal);
+      
+    } // chave que fecha o metodo perfilT
+    public static void perfilCantoneira(){ // chave que abre metodo perfil Cantoneira
+         Scanner input = new Scanner(System.in);
+         
+         double mesaInferior;
+         System.out.format("Digite a largura da mesa inferior/superior\n");
+         mesaInferior = input.nextDouble();
+         
+         double espessuraMesaInferior;
+         System.out.format("digite a espessura da mesa inferior/superior\n");
+         espessuraMesaInferior = input.nextDouble();
+         
+         double mesaLateral;
+         System.out.format("Digite a altura da mesa lateral\n");
+         mesaLateral = input.nextDouble();
+         
+         double espessuraMedaLateral;
+         System.out.format("Digite a espessura da mesa lateral\n");
+         espessuraMedaLateral = input.nextDouble();
+         
+         double xi1 = mesaInferior/2;
+         double xi2 = espessuraMesaInferior/2;
+         
+         double y1 = espessuraMedaLateral/2;
+         double y2 = (mesaLateral + espessuraMesaInferior) /2;
+        
+         double areaDaBase = mesaInferior*espessuraMesaInferior;
+         double areaDaLateral = (mesaLateral - espessuraMesaInferior)*espessuraMedaLateral;
+         double areaTotal = areaDaBase+areaDaLateral;
+         
+         System.out.format("Area Total = %.2f\n", areaTotal);
+         
+         double xiAi1 = areaDaBase*xi1;
+         double xiAi2 = areaDaLateral*xi2;
+         double xiAiTotal = xiAi1 + xiAi2;
+         
+         //System.out.format("XiAi Total = %.2f\n", xiAiTotal);
+         
+         double yiAi1 = areaDaBase*y1;
+         double yiAi2 = areaDaLateral*y2;
+         double yiAiTotal = yiAi1 + yiAi2;
+         
+         //System.out.format("YiAi Total = %.2f\n", yiAiTotal);
+         
+         double centroideX = xiAiTotal/areaTotal;
+         double centroideY = yiAiTotal/areaTotal;
+         
+         double ix1 = (mesaInferior*espessuraMesaInferior*espessuraMesaInferior*espessuraMesaInferior/12) + (areaDaBase*(centroideX - xi1)*(centroideX - xi1));
+         double ix2 = (espessuraMesaInferior*mesaInferior*mesaInferior*mesaInferior/12) + (areaDaLateral*(centroideY - xi2)*(centroideY - xi2));
+         double ixTotal = ix1 + ix2;
+         System.out.format("Centroide X = %.2f\n", centroideX);
+         System.out.format("Centroide Y = %.2f\n", centroideY);
+         System.out.format("Ix Total = %.2f\n", ixTotal);
+    } // chave que fecha o metodo perfil cantoneira
+    public static void perfilCantoneiraDupla(){ // chave que abre metodo perfil Cantoneira dupla
+        Scanner input = new Scanner(System.in);
+         
+         double mesaInferior;
+         System.out.format("Digite a largura da mesa inferior/superior\n");
+         mesaInferior = input.nextDouble();
+         
+         double espessuraMesaInferior;
+         System.out.format("digite a espessura da mesa inferior/superior\n");
+         espessuraMesaInferior = input.nextDouble();
+         
+         double mesaLateral;
+         System.out.format("Digite a altura da mesa lateral\n");
+         mesaLateral = input.nextDouble();
+         
+         double espessuraMedaLateral;
+         System.out.format("Digite a espessura da mesa lateral\n");
+         espessuraMedaLateral = input.nextDouble();
+         
+         double xi1 = mesaInferior/2;
+         double xi2 = espessuraMesaInferior/2;
+         
+         double y1 = espessuraMedaLateral/2;
+         double y2 = (mesaLateral + espessuraMesaInferior) /2;
+        
+         double areaDaBase = mesaInferior*espessuraMesaInferior;
+         double areaDaLateral = (mesaLateral - espessuraMesaInferior)*espessuraMedaLateral;
+         double areaTotal = areaDaBase+areaDaLateral;
+         
+         // System.out.format("Area Total = %.2f\n", areaTotal);
+         
+         double xiAi1 = areaDaBase*xi1;
+         double xiAi2 = areaDaLateral*xi2;
+         double xiAiTotal = xiAi1 + xiAi2;
+         
+         //System.out.format("XiAi Total = %.2f\n", xiAiTotal);
+         
+         double yiAi1 = areaDaBase*y1;
+         double yiAi2 = areaDaLateral*y2;
+         double yiAiTotal = yiAi1 + yiAi2;
+         
+         //System.out.format("YiAi Total = %.2f\n", yiAiTotal);
+         
+         double centroideX = xiAiTotal/areaTotal;
+         double centroideY = yiAiTotal/areaTotal;
+         
+         double ix1 = (mesaInferior*espessuraMesaInferior*espessuraMesaInferior*espessuraMesaInferior/12) + (areaDaBase*(centroideX - xi1)*(centroideX - xi1));
+         double ix2 = (espessuraMesaInferior*mesaInferior*mesaInferior*mesaInferior/12) + (areaDaLateral*(centroideY - xi2)*(centroideY - xi2));
+         double ixTotal = ix1 + ix2;
+         double ixTotalCantoneiraDupla = ixTotal*2;
+         //System.out.format("Centroide X = %.2f\n", centroideX);
+         //System.out.format("Centroide Y = %.2f\n", centroideY);
+         System.out.format("Ix Total = %.2f\n", ixTotalCantoneiraDupla);
+    } // chave que fecha o metodo perfil Cantoneira dupla  
+    } // chave que fecha classe
